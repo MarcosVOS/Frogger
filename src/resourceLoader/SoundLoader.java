@@ -1,9 +1,12 @@
 package resourceLoader;
 
 import java.io.File;
+import java.io.IOException;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class SoundLoader {
     private File baseSound; 
@@ -31,10 +34,9 @@ public class SoundLoader {
             currentSound = AudioSystem.getClip();
             currentSound.open(audioStream);
             currentSound.start();
-        } catch (Exception e) {
+        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
             System.err.println("Unable to play sound: " + e.getMessage());
         }
-        return;
     }
 
     public void stopSound(){
