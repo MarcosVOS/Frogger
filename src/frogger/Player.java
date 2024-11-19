@@ -6,28 +6,46 @@ import resourceLoader.ImageLoader;
 
 public class Player {
     private float x, y;
-    private final float step = 0.2f;
-    
-    
-    public Player(float x, float y){
-        this.x = x; 
+    private final float stepY; // Altura de uma linha
+    private final float stepX; // Largura de um passo horizontal
+
+    public Player(float x, float y) {
+        this.x = x;
         this.y = y;
+
+        // Baseado na tela (-1.0 a 1.0) e número de linhas/colunas
+        int numRows = 13; 
+        int numCols = 5; 
+        this.stepY = 2.0f / numRows; // Altura de uma linha
+        this.stepX = 2.0f / numCols; // Largura de um passo (ajuste conforme necessário)
     }
-    
-    public void moveUp(){
-        this.y += step;
+
+    public void moveUp() {
+        this.y += stepY;
+        if (this.y > 1.0f) { // Limita ao topo da tela
+            this.y = 1.0f;
+        }
     }
-    
-    public void moveOown(){
-        this.y -= step;
+
+    public void moveDown() {
+        this.y -= stepY;
+        if (this.y < -1.0f) { // Limita à base da tela
+            this.y = -1.0f;
+        }
     }
-    
-    public void moveLeft(){
-        this.x -= step;
+
+    public void moveLeft() {
+        this.x -= stepX;
+        if (this.x < -1.0f) { // Limita à borda esquerda
+            this.x = -1.0f;
+        }
     }
-    
-    public void moveRight(){
-        this.x += step;
+
+    public void moveRight() {
+        this.x += stepX;
+        if (this.x > 1.0f) { // Limita à borda direita
+            this.x = 1.0f;
+        }
     }
     
    public void draw(GL2 gl){

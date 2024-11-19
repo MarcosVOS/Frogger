@@ -24,7 +24,7 @@ public class KeyBoard implements KeyListener{
             game.getPlayer().moveUp();
         
         if(e.getKeyCode() == KeyEvent.VK_DOWN)
-            game.getPlayer().moveOown();
+            game.getPlayer().moveDown();
         
         if(e.getKeyCode() == KeyEvent.VK_LEFT)
             game.getPlayer().moveLeft();
