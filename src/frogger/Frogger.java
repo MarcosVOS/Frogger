@@ -23,6 +23,11 @@ public class Frogger {
         window.setResizable(false);
         window.setTitle("Frogger");
         
+        Game game = new Game();
+        
+        window.addKeyListener(new KeyBoard(game));
+        window.addGLEventListener(game);
+        
         FPSAnimator animator = new FPSAnimator(window, 60);
         animator.start();
         
