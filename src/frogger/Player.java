@@ -1,10 +1,12 @@
 package frogger;
 
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.util.texture.Texture;
+import resourceLoader.ImageLoader;
 
 public class Player {
     private float x, y;
-    private final float step = 0.1f;
+    private final float step = 0.2f;
     
     
     public Player(float x, float y){
@@ -29,15 +31,30 @@ public class Player {
     }
     
    public void draw(GL2 gl){
-       gl.glColor3f(1.0f, 1.0f, 0.0f);
-       float size = 0.05f;
+        gl.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+        float size = 0.09f;
        
-       gl.glBegin(GL2.GL_QUADS);
-       gl.glVertex2f(x - size, y - size);
-       gl.glVertex2f(x + size, y - size);
-       gl.glVertex2f(x + size, y + size);
-       gl.glVertex2f(x - size, y + size);
-       gl.glEnd();
+        ImageLoader imageLoader = new ImageLoader(gl);
+        Texture texture = imageLoader.getPlayerFroggerTexture();
+        
+        texture.bind(gl);
+        texture.enable(gl);
+        
+        gl.glEnable(GL2.GL_BLEND);
+        gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
+        
+        gl.glBegin(GL2.GL_QUADS);
+        gl.glTexCoord2f(0, 1); 
+        gl.glVertex2f(x - size, y - size);
+        gl.glTexCoord2f(1, 1);  
+        gl.glVertex2f(x + size, y - size); 
+        gl.glTexCoord2f(1, 0); 
+        gl.glVertex2f(x + size, y + size);
+        gl.glTexCoord2f(0, 0); 
+        gl.glVertex2f(x - size, y + size);
+        gl.glEnd();
+
+        texture.disable(gl);
    }
             
    public float getX(){

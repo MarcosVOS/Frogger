@@ -10,7 +10,7 @@ public class Game implements GLEventListener {
 
     @Override
     public void init(GLAutoDrawable glad) {
-        player = new Player(0.0f, -0.9f);
+        player = new Player(0.0f, -1.0f + 0.05f);
     }
 
     @Override
@@ -23,8 +23,8 @@ public class Game implements GLEventListener {
 
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 
-        int numRows = 13; // Número de linhas no mapa
-        float rowHeight = 2.0f / numRows; // Altura de cada linha
+        int numRows = 13; 
+        float rowHeight = 2.0f / numRows;
 
         for (int i = 0; i < numRows; i++) {
             float yStart = -1.0f + i * rowHeight;
@@ -54,7 +54,6 @@ public class Game implements GLEventListener {
     public void reshape(GLAutoDrawable glad, int i, int i1, int width, int height) {
         GL2 gl = glad.getGL().getGL2();
 
-        // Ajusta o viewport e a projeção
         gl.glViewport(0, 0, width, height);
 
         gl.glMatrixMode(GL2.GL_PROJECTION);
