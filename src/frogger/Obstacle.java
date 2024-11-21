@@ -5,8 +5,8 @@ import com.jogamp.opengl.GL2;
 
 public class Obstacle {
     private float x, y; 
-    private float widht, height;
-    private float speed;
+    private final float widht, height;
+    private final float speed;
     
     public Obstacle(float x, float y, float height, float minWidth, float maxWidth, float speed){
         this.y = y; 
@@ -44,4 +44,11 @@ public class Obstacle {
         return this.x;
     }
     
+    public float getWidth(){
+        return this.widht;
+    }
+    
+    public float getHeight(){
+        return this.height;
+    }
 }

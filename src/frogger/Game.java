@@ -18,6 +18,21 @@ public class Game implements GLEventListener {
         generateObstacle();
     }
     
+    private boolean checkCollision(Player player, Obstacle obstacle) {
+        float playerLeft = player.getX();
+        float playerRight = playerLeft + 0.1f;
+        float playerBottom = player.getY();
+        float playerTop = playerBottom + 0.1f; 
+
+        float obstacleLeft = obstacle.getX();
+        float obstacleRight = obstacleLeft + obstacle.getWidth();
+        float obstacleBottom = obstacle.getY();
+        float obstacleTop = obstacleBottom + obstacle.getHeight();
+
+        return playerRight > obstacleLeft && playerLeft < obstacleRight &&
+               playerTop > obstacleBottom && playerBottom < obstacleTop;
+    }
+    
     private void generateObstacleForRow(float yPosition) {
         float minWidth = 0.1f; 
         float maxWidth = 0.3f; 
@@ -87,6 +102,13 @@ public class Game implements GLEventListener {
         Obstacle obs = obstacles.get(i);
         obs.update();
         obs.draw(gl);
+        
+        if (checkCollision(player, obs)) {
+            Frogger.setCurrentScreen(new LoseScreen()); 
+            return; 
+        }
+
+
 
         if (obs.isOffScreen(1.0f)) {
             float yPosition = obs.getY(); 
