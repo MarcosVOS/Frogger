@@ -107,6 +107,11 @@ public class Game implements GLEventListener {
             gl.glEnd();
         }
         
+        if (player.getY() >= -1.0f + 8 * rowHeight && player.getY() < -1.0f + 13 * rowHeight) {
+            Frogger.setCurrentScreen(new LoseScreen()); 
+            return;
+        }
+
         for (int i = 0; i < obstacles.size(); i++) {
         Obstacle obs = obstacles.get(i);
         obs.update();
