@@ -34,25 +34,30 @@ public class Game implements GLEventListener {
     }
     
     private void generateObstacleForRow(float yPosition) {
+        int numRows = 13; 
+        float rowHeight = 2.0f / numRows; 
         float minWidth = 0.1f; 
         float maxWidth = 0.3f; 
         float playerHeight = 0.1f;
-        float speed = 0.01f + (float) Math.random() * 0.01f; 
+        float speed = 0.01f + (float) Math.random() * 0.02f;
 
-        float startX = Math.random() < 0.5 ? -1.0f : 1.0f; 
-        obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, speed));
+        if (yPosition >= -1.0f + rowHeight && yPosition <= -1.0f + 6 * rowHeight) {
+            float startX = Math.random() < 0.5 ? -1.0f : 1.0f;
+            obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, speed));
+        }
     }
+
     
-    private void generateObstacle(){
+    private void generateObstacle() {
         int numRows = 13;
         float rowHeight = 2.0f / numRows;
         float playerHeight = 0.1f;
         float minWidth = 0.1f;
         float maxWidth = 0.3f;
-        
-        for (int i = 1; i < numRows -1; i++){
+
+        for (int i = 1; i <= 6; i++) {
             float yPosition = -1.0f + i * rowHeight;
-            if(Math.random() < 0.5){
+            if (Math.random() < 0.5) {
                 float startX = Math.random() < 0.5 ? -1.0f : 1.0f;
                 float speed = (Math.random() < 0.5 ? 0.01f : 0.01f);
                 obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, speed));
@@ -84,13 +89,13 @@ public class Game implements GLEventListener {
             float yEnd = yStart + rowHeight;
 
             if (i == 0 || i == 7) {
-                gl.glColor3f(1.0f, 1.0f, 0.0f);  // Amarela
+                gl.glColor3f(1.0f, 1.0f, 0.0f);
             } else if (i >= 1 && i <= 6) {
-                gl.glColor3f(0.0f, 0.0f, 0.0f);  // Preta
+                gl.glColor3f(0.0f, 0.0f, 0.0f);
             } else if (i == numRows - 1) {
-                gl.glColor3f(0.0f, 1.0f, 0.0f);  // Verde (última linha)
+                gl.glColor3f(0.0f, 1.0f, 0.0f); 
             } else {
-                gl.glColor3f(0.0f, 0.0f, 1.0f);  // Azul (outras linhas)
+                gl.glColor3f(0.0f, 0.0f, 1.0f);  
             }
 
 
