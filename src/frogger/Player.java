@@ -6,48 +6,47 @@ import resourceLoader.ImageLoader;
 
 public class Player {
     private float x, y;
-    private final float stepY; // Altura de uma linha
-    private final float stepX; // Largura de um passo horizontal
+    private final float stepY; 
+    private final float stepX; 
 
     public Player(float x, float y) {
         this.x = x;
         this.y = y;
 
-        // Baseado na tela (-1.0 a 1.0) e número de linhas/colunas
         int numRows = 13; 
         int numCols = 5; 
-        this.stepY = 2.0f / numRows; // Altura de uma linha
-        this.stepX = 2.0f / numCols; // Largura de um passo (ajuste conforme necessário)
+        this.stepY = 2.0f / numRows; 
+        this.stepX = 2.0f / numCols;
     }
 
     public void moveLeft() {
     this.x -= stepX;
-    float size = 0.09f; // Tamanho do sprite
-    if (this.x - size < -1.0f) { // Limita considerando o tamanho
+    float size = 0.09f;
+    if (this.x - size < -1.0f) {
         this.x = -1.0f + size;
     }
 }
 
     public void moveRight() {
         this.x += stepX;
-        float size = 0.09f; // Tamanho do sprite
-        if (this.x + size > 1.0f) { // Limita considerando o tamanho
+        float size = 0.09f; 
+        if (this.x + size > 1.0f) {
             this.x = 1.0f - size;
         }
     }
 
     public void moveUp() {
         this.y += stepY;
-        float size = 0.09f; // Tamanho do sprite
-        if (this.y + size > 1.0f) { // Limita ao topo da tela considerando o tamanho
+        float size = 0.09f; 
+        if (this.y + size > 1.0f) {
             this.y = 1.0f - size;
         }
     }
 
     public void moveDown() {
         this.y -= stepY;
-        float size = 0.09f; // Tamanho do sprite
-        if (this.y - size < -1.0f) { // Limita à base da tela considerando o tamanho
+        float size = 0.09f; 
+        if (this.y - size < -1.0f) {
             this.y = -1.0f + size;
         }
     }

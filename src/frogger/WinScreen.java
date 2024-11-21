@@ -18,7 +18,6 @@ public class WinScreen implements GLEventListener{
     public void display(GLAutoDrawable glad) {
         GL2 gl = glad.getGL().getGL2();
 
-        // Fundo azul
         gl.glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
     }

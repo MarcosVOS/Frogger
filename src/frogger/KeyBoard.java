@@ -4,7 +4,7 @@ import com.jogamp.newt.event.KeyEvent;
 import com.jogamp.newt.event.KeyListener;
 
 public class KeyBoard implements KeyListener{
-    private Game game;
+    private final Game game;
     
     public KeyBoard(Game cena){
         this.game = cena;
@@ -12,14 +12,7 @@ public class KeyBoard implements KeyListener{
     
     @Override
     public void keyPressed(KeyEvent e) {        
-        //System.out.println("Key pressed: " + e.getKeyCode());
-//        if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-//            cena.anguloX = 0;
-//            cena.anguloY = 0;
-//            cena.anguloZ = 0;
-//        }
-
-//        
+    
         if(e.getKeyCode() == KeyEvent.VK_UP)
             game.getPlayer().moveUp();
         
@@ -31,15 +24,6 @@ public class KeyBoard implements KeyListener{
         
         if(e.getKeyCode() == KeyEvent.VK_RIGHT)
             game.getPlayer().moveRight();
-        
-//        if(e.getKeyCode() == KeyEvent.VK_SPACE)
-//            cena.anguloZ -= 5;
-//        
-//        if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE)
-//            cena.anguloZ += 5;
-        
-        //if(e.getKeyChar() == 'a')
-        //    System.out.println("Pressionou tecla a");
     }
 
     @Override
