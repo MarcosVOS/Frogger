@@ -3,6 +3,7 @@ package frogger;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
+import java.awt.event.WindowEvent;
 
 public class Game implements GLEventListener {
     
@@ -48,6 +49,10 @@ public class Game implements GLEventListener {
         player.draw(gl);
         
         gl.glFlush();
+        
+        if (player.getY() + 0.09f >= 1.0f) {
+            Frogger.setCurrentScreen(new WinScreen());
+        }
     }
 
     @Override

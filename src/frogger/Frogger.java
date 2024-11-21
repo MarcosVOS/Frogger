@@ -4,6 +4,7 @@ import com.jogamp.newt.event.WindowAdapter;
 import com.jogamp.newt.event.WindowEvent;
 import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.GLCapabilities;
+import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.util.FPSAnimator;
 
@@ -43,8 +44,17 @@ public class Frogger {
 
         window.setVisible(true);
     }
+    
+    public static void setCurrentScreen(GLEventListener screen) {
+        if (window.getGLEventListenerCount() > 0) {
+            window.removeGLEventListener(window.getGLEventListener(0));
+        }
+        window.addGLEventListener(screen);
+    }
             
     public static void main(String[] args) {
         init();
     }
+    
+    
 }

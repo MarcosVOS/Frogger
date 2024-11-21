@@ -20,31 +20,35 @@ public class Player {
         this.stepX = 2.0f / numCols; // Largura de um passo (ajuste conforme necessário)
     }
 
+    public void moveLeft() {
+    this.x -= stepX;
+    float size = 0.09f; // Tamanho do sprite
+    if (this.x - size < -1.0f) { // Limita considerando o tamanho
+        this.x = -1.0f + size;
+    }
+}
+
+    public void moveRight() {
+        this.x += stepX;
+        float size = 0.09f; // Tamanho do sprite
+        if (this.x + size > 1.0f) { // Limita considerando o tamanho
+            this.x = 1.0f - size;
+        }
+    }
+
     public void moveUp() {
         this.y += stepY;
-        if (this.y > 1.0f) { // Limita ao topo da tela
-            this.y = 1.0f;
+        float size = 0.09f; // Tamanho do sprite
+        if (this.y + size > 1.0f) { // Limita ao topo da tela considerando o tamanho
+            this.y = 1.0f - size;
         }
     }
 
     public void moveDown() {
         this.y -= stepY;
-        if (this.y < -1.0f) { // Limita à base da tela
-            this.y = -1.0f;
-        }
-    }
-
-    public void moveLeft() {
-        this.x -= stepX;
-        if (this.x < -1.0f) { // Limita à borda esquerda
-            this.x = -1.0f;
-        }
-    }
-
-    public void moveRight() {
-        this.x += stepX;
-        if (this.x > 1.0f) { // Limita à borda direita
-            this.x = 1.0f;
+        float size = 0.09f; // Tamanho do sprite
+        if (this.y - size < -1.0f) { // Limita à base da tela considerando o tamanho
+            this.y = -1.0f + size;
         }
     }
     
