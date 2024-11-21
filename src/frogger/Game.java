@@ -3,16 +3,53 @@ package frogger;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
-import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game implements GLEventListener {
     
     private Player player;
+    private List<Obstacle> obstacles;
 
     @Override
     public void init(GLAutoDrawable glad) {
         player = new Player(0.0f, -1.0f + 0.05f);
+        obstacles = new ArrayList<>();
+        generateObstacle();
     }
+    
+    private void generateObstacleForRow(float yPosition) {
+        float minWidth = 0.1f; 
+        float maxWidth = 0.3f; 
+        float playerHeight = 0.1f;
+        float speed = 0.01f + (float) Math.random() * 0.01f; 
+
+        float startX = Math.random() < 0.5 ? -1.0f : 1.0f; 
+        obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, speed));
+    }
+    
+    private void generateObstacle(){
+        int numRows = 13;
+        float rowHeight = 2.0f / numRows;
+        float playerHeight = 0.1f;
+        float minWidth = 0.1f;
+        float maxWidth = 0.3f;
+        
+        for (int i = 1; i < numRows -1; i++){
+            float yPosition = -1.0f + i * rowHeight;
+            if(Math.random() < 0.5){
+                float startX = Math.random() < 0.5 ? -1.0f : 1.0f;
+                float speed = (Math.random() < 0.5 ? 0.01f : 0.01f);
+                obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, speed));
+            }
+        }
+    }
+    
+    public Player getPlayer(){
+        return this.player;
+    }
+    
+    
 
     @Override
     public void dispose(GLAutoDrawable glad) {
@@ -46,6 +83,21 @@ public class Game implements GLEventListener {
             gl.glEnd();
         }
         
+        for (int i = 0; i < obstacles.size(); i++) {
+        Obstacle obs = obstacles.get(i);
+        obs.update();
+        obs.draw(gl);
+
+        if (obs.isOffScreen(1.0f)) {
+            float yPosition = obs.getY(); 
+            obstacles.remove(i);
+            i--;
+            generateObstacleForRow(yPosition); 
+            }
+        }
+
+
+        
         player.draw(gl);
         
         gl.glFlush();
@@ -67,9 +119,5 @@ public class Game implements GLEventListener {
 
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
-    }
-    
-    public Player getPlayer(){
-        return this.player;
     }
 }
