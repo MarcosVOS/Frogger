@@ -83,10 +83,14 @@ public class Game implements GLEventListener {
             float yStart = -1.0f + i * rowHeight;
             float yEnd = yStart + rowHeight;
 
-            switch (i % 3) {
-                case 0 -> gl.glColor3f(0.0f, 0.8f, 0.0f);
-                case 1 -> gl.glColor3f(0.4f, 0.4f, 0.4f);
-                case 2 -> gl.glColor3f(0.0f, 0.0f, 0.8f);
+            if (i == 0 || i == 7) {
+                gl.glColor3f(1.0f, 1.0f, 0.0f);  // Amarela
+            } else if (i >= 1 && i <= 6) {
+                gl.glColor3f(0.0f, 0.0f, 0.0f);  // Preta
+            } else if (i == numRows - 1) {
+                gl.glColor3f(0.0f, 1.0f, 0.0f);  // Verde (última linha)
+            } else {
+                gl.glColor3f(0.0f, 0.0f, 1.0f);  // Azul (outras linhas)
             }
 
 
