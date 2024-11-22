@@ -16,7 +16,7 @@ public class Player {
         int numRows = 13; 
         int numCols = 5; 
         this.stepY = 2.0f / numRows; 
-        this.stepX = 2.0f / numCols;
+        this.stepX = 1.0f / numCols;
     }
 
     public void moveLeft() {
@@ -83,6 +83,16 @@ public class Player {
    }
    
    public float getY(){
+       return this.y;
+   }
+   
+    public float setX(float x){
+       this.x = x; 
+       return this.x;
+   }
+   
+   public float setY(float y){
+       this.y = y; 
        return this.y;
    }
 }
