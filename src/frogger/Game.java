@@ -68,21 +68,27 @@ public class Game implements GLEventListener {
 
     
     private void generateObstacle() {
-        int numRows = 13;
-        float rowHeight = 2.0f / numRows;
-        float playerHeight = 0.1f;
-        float minWidth = 0.1f;
-        float maxWidth = 0.3f;
+    int numRows = 13;
+    float rowHeight = 2.0f / numRows;
+    float playerHeight = 0.1f;
+    float minWidth = 0.1f;
+    float maxWidth = 0.3f;
 
-        for (int i = 1; i <= 6; i++) {
-            float yPosition = -1.0f + i * rowHeight;
-            if (Math.random() < 0.5) {
-                float startX = Math.random() < 0.5 ? -1.0f : 1.0f;
-                float speed = (Math.random() < 0.5 ? 0.01f : 0.01f);
-                obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, speed));
-            }
+    for (int i = 1; i <= 6; i++) { 
+        float yPosition = -1.0f + i * rowHeight;
+
+        float startX;
+        float speed = 0.01f + (float) Math.random() * 0.02f;
+
+        if (i % 2 == 1) { 
+            startX = -1.0f; 
+            obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, speed)); 
+        } else { 
+            startX = 1.0f; 
+            obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, -speed)); 
         }
     }
+}
     
     public Player getPlayer(){
         return this.player;
@@ -95,7 +101,7 @@ public class Game implements GLEventListener {
     }
 
     @Override
-public void display(GLAutoDrawable glad) {
+    public void display(GLAutoDrawable glad) {
     GL2 gl = glad.getGL().getGL2();
 
     gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
@@ -103,13 +109,11 @@ public void display(GLAutoDrawable glad) {
     int numRows = 13;
     float rowHeight = 2.0f / numRows;
 
-    // Verifica se o jogador venceu
     if (player.getY() + 0.09f >= 1.0f) {
         Frogger.setCurrentScreen(new WinScreen());
         return;
     }
 
-    // Desenho das linhas do cenário
     for (int i = 0; i < numRows; i++) {
         float yStart = -1.0f + i * rowHeight;
         float yEnd = yStart + rowHeight;
@@ -117,11 +121,11 @@ public void display(GLAutoDrawable glad) {
         if (i == 0 || i == 7) {
             gl.glColor3f(1.0f, 1.0f, 0.0f);
         } else if (i >= 1 && i <= 6) {
-            gl.glColor3f(0.0f, 0.0f, 0.0f); // Obstáculos
+            gl.glColor3f(0.0f, 0.0f, 0.0f); 
         } else if (i == numRows - 1) {
-            gl.glColor3f(0.0f, 1.0f, 0.0f); // Meta
+            gl.glColor3f(0.0f, 1.0f, 0.0f); 
         } else {
-            gl.glColor3f(0.0f, 0.0f, 1.0f); // Faixa de plataformas
+            gl.glColor3f(0.0f, 0.0f, 1.0f); 
         }
 
         gl.glBegin(GL2.GL_QUADS);
@@ -137,15 +141,16 @@ public void display(GLAutoDrawable glad) {
         platform.update();
         platform.draw(gl);
 
-        if (player.getY() >= platform.getY() && player.getY() <= platform.getY() + 0.1f &&
+        if (player.getY() < 0.89f && player.getY() >= platform.getY() && player.getY() <= platform.getY() + 0.1f &&
             player.getX() >= platform.getX() && player.getX() <= platform.getX() + platform.getWidth()) {
-            onPlatform = true;
-            player.setX(player.getX() + platform.getSpeed());
+            if (player.getY() < 1.0f) { 
+                onPlatform = true;
+                player.setX(player.getX() + platform.getSpeed());
+            }
         }
     }
 
-    // Verifica se o jogador perdeu (saiu de uma plataforma na faixa das plataformas)
-    if (!onPlatform && player.getY() >= -1.0f + 8 * rowHeight && player.getY() < -1.0f + 13 * rowHeight) {
+    if (player.getY() < 0.89f &&   !onPlatform && player.getY() >= -1.0f + 8 * rowHeight && player.getY() < -1.0f + 13 * rowHeight) {
         Frogger.setCurrentScreen(new LoseScreen());
         return;
     }
@@ -171,8 +176,7 @@ public void display(GLAutoDrawable glad) {
     player.draw(gl);
     gl.glFlush();
 }
-
-
+    
     @Override
     public void reshape(GLAutoDrawable glad, int i, int i1, int width, int height) {
         GL2 gl = glad.getGL().getGL2();
