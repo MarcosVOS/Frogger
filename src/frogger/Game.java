@@ -11,7 +11,7 @@ public class Game implements GLEventListener {
     private Player player;
     private List<Obstacle> obstacles;
     private List<Platform> platforms;
-    private static final float SPEED_MULTIPLIER = 0.5f;
+    private static final float SPEED_MULTIPLIER = 0.7f;
 
 
 
@@ -53,21 +53,21 @@ public class Game implements GLEventListener {
     }
     
     private void generateObstacleForRow(float yPosition) {
-        int numRows = 13; 
-        float rowHeight = 2.0f / numRows; 
-        float minWidth = 0.1f; 
-        float maxWidth = 0.3f; 
-        float playerHeight = 0.1f;
-        float speed = 0.01f + (float) Math.random() * 0.02f;
+    float minWidth = 0.1f; 
+    float maxWidth = 0.3f; 
+    float playerHeight = 0.1f;
+    float speed = (0.01f + (float) Math.random() * 0.02f) * SPEED_MULTIPLIER;
 
-        if (yPosition >= -1.0f + rowHeight && yPosition <= -1.0f + 6 * rowHeight) {
-            float startX = Math.random() < 0.5 ? -1.0f : 1.0f;
-            obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, speed));
+    if (yPosition >= -1.0f + 1 * (2.0f / 13) && yPosition <= -1.0f + 6 * (2.0f / 13)) {
+        if (yPosition <= -1.0f + 3 * (2.0f / 13)) {
+            obstacles.add(new Obstacle(-1.0f, yPosition, playerHeight, minWidth, maxWidth, speed));
+        } else {
+            obstacles.add(new Obstacle(1.0f, yPosition, playerHeight, minWidth, maxWidth, -speed));
         }
     }
+}
 
-    
-    private void generateObstacle() {
+private void generateObstacle() {
     int numRows = 13;
     float rowHeight = 2.0f / numRows;
     float playerHeight = 0.1f;
@@ -76,19 +76,19 @@ public class Game implements GLEventListener {
 
     for (int i = 1; i <= 6; i++) { 
         float yPosition = -1.0f + i * rowHeight;
-
         float startX;
-        float speed = 0.01f + (float) Math.random() * 0.02f;
+        float speed = (0.01f + (float) Math.random() * 0.02f) * SPEED_MULTIPLIER;
 
-        if (i % 2 == 1) { 
+        if (i <= 3) { 
             startX = -1.0f; 
-            obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, speed)); 
+            obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, speed));
         } else { 
             startX = 1.0f; 
-            obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, -speed)); 
+            obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, -speed));
         }
     }
 }
+
     
     public Player getPlayer(){
         return this.player;

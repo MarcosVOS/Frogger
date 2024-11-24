@@ -8,6 +8,7 @@ public class Player {
     private float x, y;
     private final float stepY; 
     private final float stepX; 
+    private float rotationAngle;
 
     public Player(float x, float y) {
         this.x = x;
@@ -20,12 +21,13 @@ public class Player {
     }
 
     public void moveLeft() {
-    this.x -= stepX;
-    float size = 0.09f;
-    if (this.x - size < -1.0f) {
-        this.x = -1.0f + size;
+        this.x -= stepX;
+        float size = 0.09f;
+        if (this.x - size < -1.0f) {
+            this.x = -1.0f + size;
+        }
+        this.rotationAngle = 180.0f;
     }
-}
 
     public void moveRight() {
         this.x += stepX;
@@ -33,6 +35,7 @@ public class Player {
         if (this.x + size > 1.0f) {
             this.x = 1.0f - size;
         }
+        this.rotationAngle = 0.0f;
     }
 
     public void moveUp() {
