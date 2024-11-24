@@ -1,4 +1,4 @@
-package frogger;
+package Screen;
 
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
