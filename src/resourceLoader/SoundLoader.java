@@ -10,22 +10,26 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class SoundLoader {
     private File baseSound; 
+    private File songCar;
+    private File hopFrogger;
     private Clip currentSound;
     
     public SoundLoader(){
-        this.baseSound = loadSound(baseSound, "shoot.wav");
+        this.baseSound = loadSound("shoot.wav");
+        this.songCar = loadSound("songCar.wav");
+        this.hopFrogger = loadSound("sound-frogger-hop.wav");
         
     }
     
-    private File loadSound(File soundToLoad, String soundName){
-        
+    private File loadSound(String soundName){
+        File sound = null;  
         try {
-            soundToLoad = new File(getClass().getResource("/resources/sounds/" + soundName).getFile());
+            sound = new File(getClass().getResource("/resources/sounds/" + soundName).getFile());
         } catch (Exception e) {
             System.err.println("Unable to load sounds: " + e.getMessage());
         }
         
-        return soundToLoad;
+        return sound;
     }
     
      public void playSound(File sound) {
@@ -50,4 +54,11 @@ public class SoundLoader {
         return this.baseSound;
     }
     
+    public File getSongCar() {
+        return this.songCar;
+    }
+
+    public File getHopFrogger() {
+        return this.hopFrogger;
+    }
 }
