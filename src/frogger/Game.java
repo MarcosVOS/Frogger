@@ -163,6 +163,7 @@ private void generateObstacle() {
     }
 
     if (player.getY() < 0.89f &&   !onPlatform && player.getY() >= -1.0f + 8 * rowHeight && player.getY() < -1.0f + 13 * rowHeight) {
+        sounds.playSound(sounds.getDieWater());
         keyboard.setGameStatus("loseGame");        
         Frogger.setCurrentScreen(new LoseScreen());
         return;
@@ -174,7 +175,7 @@ private void generateObstacle() {
         obs.draw(gl);
 
         if (checkCollision(player, obs)) {
-            sounds.playSound(sounds.getSongCar());
+            sounds.playSound(sounds.getDieRoad());
             keyboard.setGameStatus("loseGame");
             Frogger.setCurrentScreen(new LoseScreen());
             return;

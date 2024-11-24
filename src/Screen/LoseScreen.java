@@ -6,11 +6,17 @@ import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.util.awt.TextRenderer;
 import java.awt.Font;
 import resourceLoader.ImageLoader;
+import resourceLoader.SoundLoader;
 
 public class LoseScreen implements GLEventListener {
 
     private ImageLoader imageLoader;
     private TextRenderer textRenderer;
+    private SoundLoader sounds;
+    
+    public LoseScreen() {
+        this.sounds = new SoundLoader();
+    }
 
     @Override
     public void init(GLAutoDrawable glad) {
@@ -18,6 +24,8 @@ public class LoseScreen implements GLEventListener {
         imageLoader = new ImageLoader(gl);
 
         textRenderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 24));
+        
+        sounds.playSound(sounds.getHome());
     }
 
     @Override

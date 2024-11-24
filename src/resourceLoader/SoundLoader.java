@@ -12,13 +12,20 @@ public class SoundLoader {
     private File baseSound; 
     private File songCar;
     private File hopFrogger;
+    private File dieRoad;
+    private File dieWater; 
+    private File home; 
+    private File gameOver; 
     private Clip currentSound;
     
     public SoundLoader(){
         this.baseSound = loadSound("shoot.wav");
         this.songCar = loadSound("songCar.wav");
         this.hopFrogger = loadSound("sound-frogger-hop.wav");
-        
+        this.dieRoad = loadSound("dieRoad.wav");
+        this.dieWater = loadSound("sound-frogger-plunk.wav");
+        this.home = loadSound("frogger-music.wav");
+        this.gameOver = loadSound("songGameOver.wav");
     }
     
     private File loadSound(String soundName){
@@ -60,5 +67,21 @@ public class SoundLoader {
 
     public File getHopFrogger() {
         return this.hopFrogger;
+    }
+    
+    public File getDieRoad() {
+        return this.dieRoad;
+    }
+      
+    public File getDieWater() {
+        return this.dieWater;
+    }
+    
+    public File getHome(){
+        return this.home;
+    }
+    
+     public File getGameOver(){
+        return this.gameOver;
     }
 }
