@@ -7,6 +7,8 @@ import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.util.FPSAnimator;
+import resourceLoader.SoundLoader;
+
 
 
 public class Frogger {
@@ -39,8 +41,8 @@ public class Frogger {
             }
         });
         
-//        SoundLoader player = new SoundLoader();
-//        player.playSound(player.getBaseSound());  
+        SoundLoader player = new SoundLoader();
+        player.playSound(player.getBaseSound());  
 
         window.setVisible(true);
     }
@@ -55,6 +57,15 @@ public class Frogger {
     public static void main(String[] args) {
         init();
     }
+    
+    public static void closeWindow() {
+         System.exit(0); 
+         
+            
+        }
+        
+    
+    
     
     
 }

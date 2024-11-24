@@ -3,11 +3,13 @@ package frogger;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.util.texture.Texture;
 import resourceLoader.ImageLoader;
+import resourceLoader.SoundLoader;
 
 public class Player {
     private float x, y;
     private final float stepY; 
     private final float stepX; 
+    private SoundLoader player;
 
     public Player(float x, float y) {
         this.x = x;
@@ -17,6 +19,7 @@ public class Player {
         int numCols = 5; 
         this.stepY = 2.0f / numRows; 
         this.stepX = 1.0f / numCols;
+        
     }
 
     public void moveLeft() {
@@ -24,6 +27,7 @@ public class Player {
     float size = 0.09f;
     if (this.x - size < -1.0f) {
         this.x = -1.0f + size;
+    
     }
 }
 
@@ -32,6 +36,8 @@ public class Player {
         float size = 0.09f; 
         if (this.x + size > 1.0f) {
             this.x = 1.0f - size;
+            
+       
         }
     }
 
@@ -40,6 +46,9 @@ public class Player {
         float size = 0.09f; 
         if (this.y + size > 1.0f) {
             this.y = 1.0f - size;
+            
+       
+            
         }
     }
 
@@ -48,6 +57,8 @@ public class Player {
         float size = 0.09f; 
         if (this.y - size < -1.0f) {
             this.y = -1.0f + size;
+           
+        
         }
     }
     
@@ -86,6 +97,7 @@ public class Player {
        return this.y;
    }
    
+      
     public float setX(float x){
        this.x = x; 
        return this.x;
@@ -95,4 +107,6 @@ public class Player {
        this.y = y; 
        return this.y;
    }
+
+   
 }

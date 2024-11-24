@@ -1,53 +1,63 @@
 package resourceLoader;
 
+import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class SoundLoader {
-    private File baseSound; 
+    private File baseSound;
+    private File songCar;
+    private File hopFrogger;
     private Clip currentSound;
-    
-    public SoundLoader(){
-        this.baseSound = loadSound(baseSound, "shoot.wav");
-        
+
+    public SoundLoader() {
+        this.baseSound = loadSound("shoot.wav");
+        this.songCar = loadSound("SongCar.wav");
+        this.hopFrogger = loadSound("sound-frogger-hop.wav");
     }
-    
-    private File loadSound(File soundToLoad, String soundName){
-        
+
+    private File loadSound(String soundName) {
+        File soundFile = null;
         try {
-            soundToLoad = new File(getClass().getResource("/resources/sounds/" + soundName).getFile());
+            soundFile = new File(getClass().getClassLoader().getResource("resources/sounds/" + soundName).toURI());
+            //System.out.println("Loaded sound: " + soundFile.getAbsolutePath()); // Para debug
         } catch (Exception e) {
-            System.err.println("Unable to load sounds: " + e.getMessage());
+            System.err.println("Unable to load sound: " + e.getMessage());
         }
-        
-        return soundToLoad;
+        return soundFile;
     }
-    
-     public void playSound(File sound) {
+
+    public void playSound(File sound) {
         try {
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(sound);
-            currentSound = AudioSystem.getClip();
-            currentSound.open(audioStream);
-            currentSound.start();
+            if (sound != null) {
+                AudioInputStream audioStream = AudioSystem.getAudioInputStream(sound);
+                currentSound = AudioSystem.getClip();
+                currentSound.open(audioStream);
+                currentSound.start();
+            } else {
+                System.err.println("Sound file is null!");
+            }
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
             System.err.println("Unable to play sound: " + e.getMessage());
         }
     }
 
-    public void stopSound(){
-        if(currentSound != null){
+    public void stopSound() {
+        if (currentSound != null) {
             currentSound.stop();
             currentSound.close();
         }
     }
-    
-    public File getBaseSound(){
+
+    public File getBaseSound() {
         return this.baseSound;
     }
-    
+
+    public File getSongCar() {
+        return this.songCar;
+    }
+
+    public File getHopFrogger() {
+        return this.hopFrogger;
+    }
 }
