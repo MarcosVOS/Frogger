@@ -1,5 +1,6 @@
 package frogger;
 
+import Screen.HomeScreen;
 import com.jogamp.newt.event.WindowAdapter;
 import com.jogamp.newt.event.WindowEvent;
 import com.jogamp.newt.opengl.GLWindow;
@@ -24,10 +25,10 @@ public class Frogger {
         window.setResizable(false);
         window.setTitle("Frogger");
         
-        Game game = new Game();
+        HomeScreen homeScreen = new HomeScreen();
         
-        window.addKeyListener(new KeyBoard(game));
-        window.addGLEventListener(game);
+        window.addKeyListener(new KeyBoard("homeGame"));
+        window.addGLEventListener(homeScreen);
         
         FPSAnimator animator = new FPSAnimator(window, 60);
         animator.start();

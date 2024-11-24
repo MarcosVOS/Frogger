@@ -14,8 +14,14 @@ public class Game implements GLEventListener {
     private List<Obstacle> obstacles;
     private List<Platform> platforms;
     private static final float SPEED_MULTIPLIER = 0.7f;
+    private KeyBoard keyboard;
 
+    
 
+    public Game(KeyBoard keyboard) {
+        this.keyboard = keyboard;
+    }
+    
 
     @Override
     public void init(GLAutoDrawable glad) {
@@ -153,6 +159,7 @@ private void generateObstacle() {
     }
 
     if (player.getY() < 0.89f &&   !onPlatform && player.getY() >= -1.0f + 8 * rowHeight && player.getY() < -1.0f + 13 * rowHeight) {
+        keyboard.setGameStatus("loseGame");        
         Frogger.setCurrentScreen(new LoseScreen());
         return;
     }
@@ -163,6 +170,7 @@ private void generateObstacle() {
         obs.draw(gl);
 
         if (checkCollision(player, obs)) {
+            keyboard.setGameStatus("loseGame");
             Frogger.setCurrentScreen(new LoseScreen());
             return;
         }
