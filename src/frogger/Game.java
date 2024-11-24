@@ -7,6 +7,7 @@ import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import java.util.ArrayList;
 import java.util.List;
+import resourceLoader.SoundLoader;
 
 public class Game implements GLEventListener {
     
@@ -15,11 +16,14 @@ public class Game implements GLEventListener {
     private List<Platform> platforms;
     private static final float SPEED_MULTIPLIER = 0.7f;
     private KeyBoard keyboard;
+    private SoundLoader sounds;
+
 
     
 
     public Game(KeyBoard keyboard) {
         this.keyboard = keyboard;
+        this.sounds = new SoundLoader();
     }
     
 
@@ -170,6 +174,7 @@ private void generateObstacle() {
         obs.draw(gl);
 
         if (checkCollision(player, obs)) {
+            sounds.playSound(sounds.getSongCar());
             keyboard.setGameStatus("loseGame");
             Frogger.setCurrentScreen(new LoseScreen());
             return;

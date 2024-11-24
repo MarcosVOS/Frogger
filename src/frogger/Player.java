@@ -3,14 +3,20 @@ package frogger;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.util.texture.Texture;
 import resourceLoader.ImageLoader;
+import resourceLoader.SoundLoader;
+
 
 public class Player {
     private float x, y;
     private final float stepY; 
     private final float stepX; 
     private float rotationAngle;
-
+    private SoundLoader sounds;
+    
     public Player(float x, float y) {
+        
+        this.sounds = new SoundLoader();
+        
         this.x = x;
         this.y = y;
 
@@ -27,6 +33,8 @@ public class Player {
             this.x = -1.0f + size;
         }
         this.rotationAngle = 180.0f;
+        sounds.playSound(sounds.getHopFrogger());
+
     }
 
     public void moveRight() {
@@ -36,6 +44,7 @@ public class Player {
             this.x = 1.0f - size;
         }
         this.rotationAngle = 0.0f;
+        sounds.playSound(sounds.getHopFrogger());
     }
 
     public void moveUp() {
@@ -44,6 +53,7 @@ public class Player {
         if (this.y + size > 1.0f) {
             this.y = 1.0f - size;
         }
+        sounds.playSound(sounds.getHopFrogger());
     }
 
     public void moveDown() {
@@ -52,6 +62,7 @@ public class Player {
         if (this.y - size < -1.0f) {
             this.y = -1.0f + size;
         }
+        sounds.playSound(sounds.getHopFrogger());
     }
     
    public void draw(GL2 gl){
