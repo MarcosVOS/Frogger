@@ -11,6 +11,7 @@ public class ImageLoader {
     private Texture playerFroggerTexture;
     private Texture gameOver; 
     private Texture gameWin;
+    private Texture gameHome;
     private Texture car;
     private Texture truck;
 
@@ -19,6 +20,7 @@ public class ImageLoader {
             playerFroggerTexture = loadTexture(gl, "sapo.bmp");
             gameOver = loadTexture(gl, "GameOver.bmp");
             gameWin = loadTexture(gl, "GameWin.bmp");
+            gameHome = loadTexture(gl, "HomeScreen.bmp");
             car = loadTexture(gl, "car.bmp");
             truck = loadTexture(gl, "truck.bmp");
         } catch (IOException e) {
@@ -55,6 +57,12 @@ public class ImageLoader {
             gameWin.bind(gl); 
             gameWin.enable(gl); 
         }
+        
+        if (gameHome != null) {
+            gameHome.bind(gl); 
+            gameHome.enable(gl); 
+        }
+        
 
         if (car != null) {
             car.bind(gl); 
@@ -80,10 +88,16 @@ public class ImageLoader {
             gameOver.destroy(gl); 
         }
 
-         if (gameWin != null) {
+        if (gameWin != null) {
             gameWin.disable(gl);
             gameWin.destroy(gl); 
         }
+        
+        if (gameHome != null) {
+            gameHome.disable(gl);
+            gameHome.destroy(gl); 
+        }
+
 
         if (car != null) {
             car.disable(gl);
@@ -106,6 +120,10 @@ public class ImageLoader {
 
     public Texture getGameWinTexture(){
         return gameWin;
+    }
+    
+    public Texture getGameHomeTexture(){
+        return gameHome;
     }
 
     public Texture getCarTexture(){

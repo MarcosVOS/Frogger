@@ -3,12 +3,17 @@ package Screen;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
+import com.jogamp.opengl.util.awt.TextRenderer;
 import frogger.KeyBoard;
+import java.awt.Font;
+import resourceLoader.ImageLoader;
 import resourceLoader.SoundLoader;
 
 public class HomeScreen implements GLEventListener {
     
+    private TextRenderer textRenderer;
     private SoundLoader sounds;
+    private ImageLoader imageLoader;
     
     public HomeScreen() {
         this.sounds = new SoundLoader();
@@ -16,11 +21,14 @@ public class HomeScreen implements GLEventListener {
 
     @Override
     public void init(GLAutoDrawable glad) {
+        
         GL2 gl = glad.getGL().getGL2();
-
-        gl.glClearColor(0.0f, 1.0f, 0.0f, 1.0f); // RGB: (0, 1, 0), Alpha: 1
+        imageLoader = new ImageLoader(gl);
+        
+        textRenderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 24));
         
         sounds.playSound(sounds.getHome());
+        
     }
 
     @Override
@@ -28,8 +36,49 @@ public class HomeScreen implements GLEventListener {
         GL2 gl = glad.getGL().getGL2();
 
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
+        gl.glLoadIdentity();
+        
+        gl.glColor3f(1.0f, 1.0f, 1.0f);
+        
+        drawScreenImage(gl);
+
+        renderText(glad);
+
+        gl.glFlush();
+    }
+    
+    
+    private void drawScreenImage(GL2 gl) {
+        float size = 1.0f; 
+        imageLoader.getGameHomeTexture().bind(gl);
+        imageLoader.getGameHomeTexture().enable(gl);
+
+        gl.glBegin(GL2.GL_QUADS);
+        gl.glTexCoord2f(0, 1); gl.glVertex2f(-size, -size); 
+        gl.glTexCoord2f(1, 1); gl.glVertex2f(size, -size);  
+        gl.glTexCoord2f(1, 0); gl.glVertex2f(size, size);   
+        gl.glTexCoord2f(0, 0); gl.glVertex2f(-size, size); 
+        gl.glEnd();
+
+        imageLoader.getGameHomeTexture().disable(gl);
     }
 
+    private void renderText(GLAutoDrawable glad) {
+        int width = glad.getSurfaceWidth();
+        int height = glad.getSurfaceHeight();
+
+        textRenderer.beginRendering(width, height);
+        textRenderer.setColor(1.0f, 1.0f, 1.0f, 1.0f); 
+
+        int textX = width / 2 - 100;
+        int textY = height / 3;
+
+        
+        textRenderer.draw("Press ENTER", textX, textY - 30);
+
+        textRenderer.endRendering();
+    }
+    
     @Override
     public void reshape(GLAutoDrawable glad, int x, int y, int width, int height) {
         GL2 gl = glad.getGL().getGL2();
@@ -44,8 +93,10 @@ public class HomeScreen implements GLEventListener {
         gl.glLoadIdentity();
     }
 
-    @Override
+   @Override
     public void dispose(GLAutoDrawable glad) {
-        // Nada a ser limpo, pois não estamos carregando recursos extras
+        if (imageLoader != null) {
+            imageLoader.cleanup(glad.getGL().getGL2());
+        }
     }
 }

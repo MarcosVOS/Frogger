@@ -40,9 +40,6 @@ public class Frogger {
             }
         });
         
-//        SoundLoader player = new SoundLoader();
-//        player.playSound(player.getBaseSound());  
-
         window.setVisible(true);
     }
     
