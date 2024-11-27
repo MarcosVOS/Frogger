@@ -7,6 +7,7 @@ import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import java.util.ArrayList;
 import java.util.List;
+import resourceLoader.ImageLoader;
 import resourceLoader.SoundLoader;
 
 public class Game implements GLEventListener {
@@ -17,7 +18,7 @@ public class Game implements GLEventListener {
     private static final float SPEED_MULTIPLIER = 0.7f;
     private KeyBoard keyboard;
     private SoundLoader sounds;
-
+    private ImageLoader imageLoader;
 
     
 
@@ -29,6 +30,9 @@ public class Game implements GLEventListener {
 
     @Override
     public void init(GLAutoDrawable glad) {
+        GL2 gl = glad.getGL().getGL2();
+        imageLoader = new ImageLoader(gl);
+
         player = new Player(0.0f, -1.0f + 0.05f);
         obstacles = new ArrayList<>();
         generateObstacle();
@@ -45,7 +49,8 @@ public class Game implements GLEventListener {
             float platformWidth = 0.5f; 
             float baseSpeed = 0.01f + (float) Math.random() * 0.02f; 
             float speed = baseSpeed * SPEED_MULTIPLIER; 
-            platforms.add(new Platform(-0.5f, yPosition, platformWidth, speed));
+
+            platforms.add(new Platform(-0.5f, yPosition, platformWidth, speed, imageLoader.getStemTexture()));
         }
     }
     
@@ -65,41 +70,41 @@ public class Game implements GLEventListener {
     }
     
     private void generateObstacleForRow(float yPosition) {
-    float minWidth = 0.1f; 
-    float maxWidth = 0.3f; 
-    float playerHeight = 0.1f;
-    float speed = (0.01f + (float) Math.random() * 0.02f) * SPEED_MULTIPLIER;
-
-    if (yPosition >= -1.0f + 1 * (2.0f / 13) && yPosition <= -1.0f + 6 * (2.0f / 13)) {
-        if (yPosition <= -1.0f + 3 * (2.0f / 13)) {
-            obstacles.add(new Obstacle(-1.0f, yPosition, playerHeight, minWidth, maxWidth, speed));
-        } else {
-            obstacles.add(new Obstacle(1.0f, yPosition, playerHeight, minWidth, maxWidth, -speed));
-        }
-    }
-}
-
-private void generateObstacle() {
-    int numRows = 13;
-    float rowHeight = 2.0f / numRows;
-    float playerHeight = 0.1f;
-    float minWidth = 0.1f;
-    float maxWidth = 0.3f;
-
-    for (int i = 1; i <= 6; i++) { 
-        float yPosition = -1.0f + i * rowHeight;
-        float startX;
+        float minWidth = 0.1f;
+        float maxWidth = 0.3f;
+        float playerHeight = 0.1f;
         float speed = (0.01f + (float) Math.random() * 0.02f) * SPEED_MULTIPLIER;
 
-        if (i <= 3) { 
-            startX = -1.0f; 
-            obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, speed));
-        } else { 
-            startX = 1.0f; 
-            obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, -speed));
+        if (yPosition >= -1.0f + 1 * (2.0f / 13) && yPosition <= -1.0f + 6 * (2.0f / 13)) {
+            if (yPosition <= -1.0f + 3 * (2.0f / 13)) {
+                obstacles.add(new Obstacle(-1.0f, yPosition, playerHeight, minWidth, maxWidth, speed, imageLoader.getCarTexture()));
+            } else {
+                obstacles.add(new Obstacle(1.0f, yPosition, playerHeight, minWidth, maxWidth, -speed, imageLoader.getCarTexture()));
+            }
         }
     }
-}
+
+    private void generateObstacle() {
+        int numRows = 13;
+        float rowHeight = 2.0f / numRows;
+        float playerHeight = 0.1f;
+        float minWidth = 0.1f;
+        float maxWidth = 0.3f;
+
+        for (int i = 1; i <= 6; i++) {
+            float yPosition = -1.0f + i * rowHeight;
+            float startX;
+            float speed = (0.01f + (float) Math.random() * 0.02f) * SPEED_MULTIPLIER;
+
+            if (i <= 3) {
+                startX = -1.0f;
+                obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, speed, imageLoader.getCarTexture()));
+            } else {
+                startX = 1.0f;
+                obstacles.add(new Obstacle(startX, yPosition, playerHeight, minWidth, maxWidth, -speed, imageLoader.getCarTexture()));
+            }
+        }
+    }
 
     
     public Player getPlayer(){

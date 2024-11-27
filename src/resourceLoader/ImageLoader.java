@@ -14,6 +14,7 @@ public class ImageLoader {
     private Texture gameHome;
     private Texture car;
     private Texture truck;
+    private Texture stem;
 
     public ImageLoader(GL2 gl) {
         try {
@@ -23,6 +24,7 @@ public class ImageLoader {
             gameHome = loadTexture(gl, "HomeScreen.bmp");
             car = loadTexture(gl, "car.bmp");
             truck = loadTexture(gl, "truck.bmp");
+            stem = loadTexture(gl, "stem.bmp");
         } catch (IOException e) {
             System.err.println("Error loading image: " + e.getMessage());
         }
@@ -61,8 +63,7 @@ public class ImageLoader {
         if (gameHome != null) {
             gameHome.bind(gl); 
             gameHome.enable(gl); 
-        }
-        
+        }   
 
         if (car != null) {
             car.bind(gl); 
@@ -74,6 +75,10 @@ public class ImageLoader {
             truck.enable(gl); 
         }
         
+        if (truck != null) {
+            truck.bind(gl); 
+            truck.enable(gl); 
+        }
     }
 
  
@@ -108,6 +113,11 @@ public class ImageLoader {
             truck.disable(gl);
             truck.destroy(gl); 
         }
+        
+        if (stem != null) {
+            stem.disable(gl);
+            stem.destroy(gl); 
+        }
     }
 
     public Texture getPlayerFroggerTexture() {
@@ -132,5 +142,9 @@ public class ImageLoader {
     
     public Texture getTruckTexture(){
         return truck;
+    }
+    
+    public Texture getStemTexture(){
+        return stem;
     }
 }
