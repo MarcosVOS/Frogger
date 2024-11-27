@@ -44,7 +44,7 @@ public class Game implements GLEventListener {
         int numRows = 13;
         float rowHeight = 2.0f / numRows;
 
-        for (int i = 8; i < 13; i++) { 
+        for (int i = 8; i < 12; i++) { 
             float yPosition = -1.0f + i * rowHeight;
             float platformWidth = 0.5f; 
             float baseSpeed = 0.01f + (float) Math.random() * 0.02f; 
