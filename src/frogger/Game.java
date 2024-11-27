@@ -160,10 +160,8 @@ public class Game implements GLEventListener {
 
         if (player.getY() < 0.89f && player.getY() >= platform.getY() && player.getY() <= platform.getY() + 0.1f &&
             player.getX() >= platform.getX() && player.getX() <= platform.getX() + platform.getWidth()) {
-            if (player.getY() < 1.0f) { 
-                onPlatform = true;
-                player.setX(player.getX() + platform.getSpeed());
-            }
+            onPlatform = true;
+            player.setX(player.getX() + platform.getSpeed());
         }
     }
 

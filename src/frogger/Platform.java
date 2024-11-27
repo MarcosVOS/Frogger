@@ -15,11 +15,12 @@ public class Platform {
         this.texture = texture;
     }
 
-    public void update() {
+     public void update() {
         x += speed;
 
-        if (x > 1.0f || x < -1.0f) {
-            speed = -speed;  
+        if (x <= -1.0f || x + width >= 1.0f) {
+            speed = -speed;
+            x = Math.max(-1.0f, Math.min(x, 1.0f - width));
         }
     }
 
